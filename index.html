@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Resolut</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #121212;
+        --text: rgba(255, 255, 255, 0.92);
+        --muted: rgba(255, 255, 255, 0.72);
+        --subtle: rgba(255, 255, 255, 0.6);
+        --field: rgba(255, 255, 255, 0.08);
+        --field-border: rgba(255, 255, 255, 0.14);
+        --focus: rgba(16, 185, 129, 0.45);
+        --green: #10b981;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        height: 100%;
+      }
+
+      body {
+        margin: 0;
+        font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+      }
+
+      main {
+        min-height: 100%;
+        display: grid;
+        place-items: center;
+        padding: 48px 18px;
+      }
+
+      .card {
+        width: 100%;
+        max-width: 680px;
+        text-align: center;
+      }
+
+      h1 {
+        margin: 0 0 14px 0;
+        font-size: clamp(44px, 7vw, 72px);
+        letter-spacing: 0.18em;
+        font-weight: 600;
+        line-height: 1.05;
+      }
+
+      .tagline {
+        margin: 0 0 18px 0;
+        font-size: clamp(16px, 2.3vw, 20px);
+        color: var(--muted);
+        font-weight: 500;
+      }
+
+      p {
+        margin: 0 auto 26px auto;
+        max-width: 56ch;
+        font-size: 16px;
+        line-height: 1.65;
+        color: var(--subtle);
+      }
+
+      form {
+        margin: 0 auto 14px auto;
+        width: 100%;
+        max-width: 520px;
+        display: grid;
+        gap: 12px;
+      }
+
+      input[type="email"] {
+        width: 100%;
+        height: 48px;
+        padding: 0 14px;
+        border-radius: 12px;
+        border: 1px solid var(--field-border);
+        background: var(--field);
+        color: var(--text);
+        outline: none;
+        font-size: 16px;
+      }
+
+      input[type="email"]::placeholder {
+        color: rgba(255, 255, 255, 0.5);
+      }
+
+      input[type="email"]:focus {
+        border-color: rgba(16, 185, 129, 0.65);
+        box-shadow: 0 0 0 4px var(--focus);
+      }
+
+      button[type="submit"] {
+        width: 100%;
+        height: 48px;
+        border-radius: 12px;
+        border: 1px solid rgba(16, 185, 129, 0.45);
+        background: var(--green);
+        color: rgba(255, 255, 255, 0.95);
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      button[type="submit"]:focus {
+        outline: none;
+        box-shadow: 0 0 0 4px var(--focus);
+      }
+
+      .fineprint {
+        margin: 0;
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.55);
+      }
+
+      @media (min-width: 640px) {
+        form {
+          grid-template-columns: 1fr auto;
+          align-items: center;
+        }
+
+        button[type="submit"] {
+          width: auto;
+          padding: 0 18px;
+          white-space: nowrap;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="card">
+        <h1>RESOLUT</h1>
+        <div class="tagline">Built for the ones still fighting.</div>
+        <p>
+          Something is coming. Built by someone who understands what you are carrying. Join the waitlist and be the first to know when it is ready.
+        </p>
+
+        <form id="waitlist-form" autocomplete="on">
+          <input
+            id="email"
+            name="email"
+            type="email"
+            inputmode="email"
+            autocomplete="email"
+            placeholder="Your email address"
+            required
+          />
+          <button type="submit">Join the Waitlist.</button>
+        </form>
+
+        <p class="fineprint">No spam. No pressure. Just Resolut.</p>
+      </div>
+    </main>
+
+    <script>
+      (function () {
+        var form = document.getElementById("waitlist-form");
+        var emailInput = document.getElementById("email");
+
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+          var email = (emailInput.value || "").trim();
+          if (!email) return;
+          var url = "https://tally.so/r/aQGDkB?email=" + encodeURIComponent(email);
+          window.open(url, "_blank", "noopener,noreferrer");
+        });
+      })();
+    </script>
+  </body>
+</html>
