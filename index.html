@@ -127,6 +127,13 @@
         color: rgba(255, 255, 255, 0.55);
       }
 
+      .status {
+        margin: 18px 0 0 0;
+        font-size: 16px;
+        line-height: 1.6;
+        color: var(--text);
+      }
+
       @media (min-width: 640px) {
         form {
           grid-template-columns: 1fr auto;
@@ -163,6 +170,7 @@
           <button type="submit">Join the Waitlist.</button>
         </form>
 
+        <p id="status" class="status" role="status" aria-live="polite" hidden></p>
         <p class="fineprint">No spam. No pressure. Just Resolut.</p>
       </div>
     </main>
@@ -171,13 +179,42 @@
       (function () {
         var form = document.getElementById("waitlist-form");
         var emailInput = document.getElementById("email");
+        var statusEl = document.getElementById("status");
+        var submitBtn = form.querySelector('button[type="submit"]');
+
+        var SUPABASE_URL = "https://mnzhkavsybboozqlawbw.supabase.co";
+        var SUPABASE_ANON_KEY = "sb_publishable_LgX758cGZxisP__aF5Z_Eg_zwPtbPD0";
+        var ENDPOINT = SUPABASE_URL + "/rest/v1/waitlist";
+
+        function showStatus(message) {
+          statusEl.textContent = message;
+          statusEl.hidden = false;
+        }
 
         form.addEventListener("submit", function (e) {
           e.preventDefault();
           var email = (emailInput.value || "").trim();
           if (!email) return;
-          var url = "https://tally.so/r/aQGDkB?email=" + encodeURIComponent(email);
-          window.open(url, "_blank", "noopener,noreferrer");
+          submitBtn.disabled = true;
+
+          fetch(ENDPOINT, {
+            method: "POST",
+            headers: {
+              apikey: SUPABASE_ANON_KEY,
+              "Content-Type": "application/json",
+              Prefer: "return=minimal",
+            },
+            body: JSON.stringify({ email: email }),
+          })
+            .then(function (res) {
+              if (!res.ok) throw new Error("Request failed");
+              form.hidden = true;
+              showStatus("You are on the list. We will be in touch.");
+            })
+            .catch(function () {
+              showStatus("Something went wrong. Please try again.");
+              submitBtn.disabled = false;
+            });
         });
       })();
     </script>
